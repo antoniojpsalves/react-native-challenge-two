@@ -114,7 +114,7 @@ export function Home() {
   const [isFollowingDiet, setIsFollowingDiet] = useState(true)
 
   //Pegar isso aqui do localStorage
-  let percent = 47.32
+  let percent = 90.86
 
   // Para verificar a porcentagem e mudar os estilos
 

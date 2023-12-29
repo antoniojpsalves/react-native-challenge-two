@@ -2,6 +2,7 @@ import { useTheme } from "styled-components"
 import { BackButton, BackIcon, Container, Content, HeaderWrapper } from "./styled"
 import { useNavigation, useRoute } from "@react-navigation/native"
 import { DisplayStatisticInfo } from "../../components/DisplayStatisticInfo"
+import { GeneralStatisticDisplay } from "../../components/GeneralStatisticDisplay"
 
 
 type RouteParams = {
@@ -33,7 +34,7 @@ export function Statistics() {
         <DisplayStatisticInfo percent={percent} />
       </HeaderWrapper>
       <Content>
-
+        <GeneralStatisticDisplay bestSequence={22} countRegisters={109} amountInDiet={99} amountOutDiet={10} />
       </Content>
     </Container>
   )

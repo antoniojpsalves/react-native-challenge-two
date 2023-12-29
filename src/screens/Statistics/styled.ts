@@ -11,7 +11,7 @@ export const Container = styled(SafeAreaView)`
 `
 export const HeaderWrapper = styled.View`
   background-color: transparent;
-  height: 100px;
+  height: 130px;
   align-items: center;
   justify-content: center;
   position: relative;
@@ -27,7 +27,7 @@ export const BackButton = styled.TouchableOpacity`
   position: absolute;
   top: 10px;
   left: 15px;
-  border: 5px solid transparent;
+  border: 15px solid transparent;
 `
 
 export const BackIcon = styled(ArrowLeft).attrs(({ theme }) => ({
