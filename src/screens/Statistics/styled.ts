@@ -18,9 +18,16 @@ export const HeaderWrapper = styled.View`
 `
 
 export const BackButton = styled.TouchableOpacity`
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  padding: 5px;
   position: absolute;
   top: 10px;
   left: 15px;
+  border: 5px solid transparent;
 `
 
 export const BackIcon = styled(ArrowLeft).attrs(({ theme }) => ({
