@@ -3,10 +3,10 @@ import { Container, Percent, Phrase } from "./styled"
 
 interface DisplayStatisticProps {
   percent: number
-  phrase: string
+  phrase?: string
 }
 
-export function DisplayStatisticInfo({ percent, phrase }: DisplayStatisticProps) {
+export function DisplayStatisticInfo({ percent, phrase = 'das refeições dentro da dieta' }: DisplayStatisticProps) {
   return (
     <Container>
       <Percent>

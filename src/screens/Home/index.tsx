@@ -5,7 +5,7 @@ import { Container } from "./styled"
 import { SectionList } from "react-native";
 import { ItemListComponent } from "../../components/ItemListComponent";
 import { ListSessionTitle } from "../../components/ListSessionTitle";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Loading } from "../../components/Loading";
 import { ListEmpty } from "../../components/ListEmpty";
 
@@ -111,13 +111,21 @@ export function Home() {
 
   const [mealList, setMealList] = useState(fakeData)
 
+  const [isFollowingDiet, setIsFollowingDiet] = useState(true)
 
+  //Pegar isso aqui do localStorage
+  let percent = 47.32
 
+  // Para verificar a porcentagem e mudar os estilos
+
+  useEffect(() => {
+    setIsFollowingDiet(percent > 50.0)
+  }, [percent])
 
   return (
     <Container>
       <HomeHeader />
-      <StatisticCard percent={90.86} phrase="das refeições dentro da dieta" statusDiet />
+      <StatisticCard percent={percent} statusDiet={isFollowingDiet} />
       <NewMealComponent />
 
       {

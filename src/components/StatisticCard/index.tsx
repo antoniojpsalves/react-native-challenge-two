@@ -8,17 +8,17 @@ import { TouchableOpacityProps } from 'react-native'
 
 type Props = TouchableOpacityProps & {
   percent: number
-  phrase: string
+  phrase?: string
   statusDiet?: boolean
 }
 
-export function StatisticCard({ percent, phrase, statusDiet = false, ...rest }: Props) {
+export function StatisticCard({ percent, phrase = 'das refeições dentro da dieta', statusDiet = false, ...rest }: Props) {
 
 
   const navigation = useNavigation()
 
   function handleGoToStatistics() {
-    return navigation.navigate('statistics')
+    return navigation.navigate('statistics', { status: statusDiet, percent })
   }
 
   return (
