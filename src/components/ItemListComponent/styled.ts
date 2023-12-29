@@ -16,7 +16,7 @@ export const Container = styled(TouchableOpacity)`
   border-radius: 6px;
   padding: 14px 16px 14px 12px;
   gap: 12px;
-
+  margin-bottom: 8px;
 `
 
 export const HourDisplay = styled.Text`
