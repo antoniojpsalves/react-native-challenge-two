@@ -16,6 +16,7 @@ import {
 } from './styled'
 import { DefaultBlackButton } from '../DefaultBlackButton';
 import { useTheme } from 'styled-components';
+import { useNavigation } from '@react-navigation/native';
 
 interface FormMeal {
   name?: string
@@ -34,6 +35,7 @@ export function FormMeal({
 }: FormMeal) {
 
   const theme = useTheme()
+  const navigation = useNavigation()
 
   const [mealName, setMealName] = useState(name ?? '')
   const [mealDescription, setMealDescription] = useState(description ?? '')
@@ -44,6 +46,13 @@ export function FormMeal({
 
   function handleSelectMealInDiet(state: number) {
     return setMealInDiet(state)
+  }
+
+
+
+  function handleGoToNewMealFeedBack() {
+    // Salvar e nover para a tela de feedback
+    return navigation.navigate('addNewMealFeedback', { followingDiet: mealInDiet === 1 })
   }
 
   return (
@@ -104,7 +113,7 @@ export function FormMeal({
           <DefaultButtonText>Não</DefaultButtonText>
         </DefaultButton>
       </RowWrapper>
-      <DefaultBlackButton title='Cadastrar refeição' />
+      <DefaultBlackButton title='Cadastrar refeição' onPress={() => handleGoToNewMealFeedBack()} />
     </Container>
   )
 
