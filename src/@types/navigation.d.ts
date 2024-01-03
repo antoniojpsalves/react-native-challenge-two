@@ -12,6 +12,7 @@ export declare global {
       }
       meal: {
         mealId: string;
+        inDiet: boolean;
       }
       editMeal: {
         mealId: string;

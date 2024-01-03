@@ -15,14 +15,14 @@ export function ItemListComponent({ mealId, hour, description, status, ...rest }
 
   const navigation = useNavigation()
 
-  function handleGoToMealDetails(mealId: string) {
-    return navigation.navigate('meal', { mealId })
+  function handleGoToMealDetails(mealId: string, status: boolean) {
+    return navigation.navigate('meal', { mealId, inDiet: status })
   }
 
   return (
     <Container
       {...rest}
-      onPress={() => handleGoToMealDetails(mealId)}
+      onPress={() => handleGoToMealDetails(mealId, status)}
     >
       <HourDisplay>{hour}</HourDisplay>
       <Divisor />
