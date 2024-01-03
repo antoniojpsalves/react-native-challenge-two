@@ -23,7 +23,8 @@ import { DefaultTitleHeader } from '../../components/DefaultTitleHeader'
 
 import { useRoute } from '@react-navigation/native'
 
-import { TouchableOpacityProps } from 'react-native'
+import { Alert, TouchableOpacityProps } from 'react-native'
+import { useState } from 'react'
 
 type RouteParams = {
   mealId: string
@@ -31,11 +32,26 @@ type RouteParams = {
 }
 
 export function Meal() {
+
+  const [modalVisible, setModalVisible] = useState(false);
+
   const theme = useTheme()
 
   const route = useRoute()
 
   const { mealId, inDiet } = route.params as RouteParams
+
+
+  async function mealRemove(mealId: string) {
+    console.log('tentando remover esse item')
+  }
+
+  function handleDeleteItem(mealId: string) {
+    Alert.alert('', 'Deseja realmente escluir o registro da refeição?', [
+      { text: 'Cancelar', style: 'cancel' },
+      { text: 'Sim, excluir', onPress: () => mealRemove(mealId) }
+    ])
+  }
 
   return (
     <Container style={{ backgroundColor: inDiet ? theme.COLORS.PRODUCT.GREEN_LIGHT : theme.COLORS.PRODUCT.RED_LIGHT }}>
@@ -62,7 +78,7 @@ export function Meal() {
             <IconPencil />
             <LabelForButtonWhite>Editar refeição</LabelForButtonWhite>
           </ButtonEdit>
-          <ButtonTrash>
+          <ButtonTrash onPress={handleDeleteItem}>
             <IconTrash />
             <LabelForButton>Excluir refeição</LabelForButton>
           </ButtonTrash>
