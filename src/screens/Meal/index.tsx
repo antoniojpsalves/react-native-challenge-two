@@ -49,7 +49,7 @@ export function Meal() {
   async function mealRemove() {
     console.log('tentando remover esse item ' + mealId)
     try {
-      removeMealByMealId(mealId)
+      await removeMealByMealId(mealId)
     } catch (err) {
       console.error(err)
     }
