@@ -1,7 +1,5 @@
 import { useState } from 'react'
 
-import DateTimePicker from '@react-native-community/datetimepicker';
-
 import {
   Container,
   DefaultLabel,
@@ -24,6 +22,7 @@ interface FormMeal {
   date?: string
   hour?: string
   inDiet?: number
+  edit?: boolean
 }
 
 export function FormMeal({
@@ -31,7 +30,8 @@ export function FormMeal({
   description = undefined,
   date = undefined,
   hour = undefined,
-  inDiet = 0
+  inDiet = 0,
+  edit = false,
 }: FormMeal) {
 
   const theme = useTheme()
@@ -113,7 +113,10 @@ export function FormMeal({
           <DefaultButtonText>Não</DefaultButtonText>
         </DefaultButton>
       </RowWrapper>
-      <DefaultBlackButton title='Cadastrar refeição' onPress={() => handleGoToNewMealFeedBack()} />
+      <DefaultBlackButton
+        title={edit ? 'Salvar alterações' : 'Cadastrar refeição'}
+        onPress={() => handleGoToNewMealFeedBack()}
+      />
     </Container>
   )
 

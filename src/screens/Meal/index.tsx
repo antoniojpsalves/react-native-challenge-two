@@ -21,7 +21,7 @@ import {
 
 import { DefaultTitleHeader } from '../../components/DefaultTitleHeader'
 
-import { useRoute } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 
 import { Alert, TouchableOpacityProps } from 'react-native'
 import { useState } from 'react'
@@ -39,18 +39,24 @@ export function Meal() {
 
   const route = useRoute()
 
+  const navigation = useNavigation()
+
   const { mealId, inDiet } = route.params as RouteParams
 
 
-  async function mealRemove(mealId: string) {
-    console.log('tentando remover esse item')
+  async function mealRemove() {
+    console.log('tentando remover esse item ' + mealId)
   }
 
-  function handleDeleteItem(mealId: string) {
+  function handleDeleteItem() {
     Alert.alert('', 'Deseja realmente escluir o registro da refeição?', [
       { text: 'Cancelar', style: 'cancel' },
-      { text: 'Sim, excluir', onPress: () => mealRemove(mealId) }
+      { text: 'Sim, excluir', onPress: () => mealRemove() }
     ])
+  }
+
+  function handleNavigateToEditMeal() {
+    return navigation.navigate('editMeal', { mealId })
   }
 
   return (
@@ -74,7 +80,7 @@ export function Meal() {
           </Tag>
         </ContainerData>
         <ContainerButtons>
-          <ButtonEdit>
+          <ButtonEdit onPress={handleNavigateToEditMeal}>
             <IconPencil />
             <LabelForButtonWhite>Editar refeição</LabelForButtonWhite>
           </ButtonEdit>
