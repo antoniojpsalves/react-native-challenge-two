@@ -115,17 +115,25 @@ export function Home() {
 
   const [isFollowingDiet, setIsFollowingDiet] = useState(true)
 
-  //Pegar isso aqui do localStorage
-  let percent = 90.86
+  const [percent, setPercent] = useState(0)
 
 
   async function fetchMeals() {
     try {
       setIsLoading(true)
-      const data = await formatingDataToSectionList()
+
+      const { resultado, inDietMealCount, amountMealCount } = await formatingDataToSectionList()
       // tratar o data para que ele fique no formato esperado.
-      console.log(data)
-      setMealList(data)
+
+      setMealList(resultado)
+
+      console.log('resultado length: ' + amountMealCount)
+      console.log('inDietMealCount : ' + inDietMealCount)
+
+      let percentCalculed = (inDietMealCount * 100) / amountMealCount
+
+      setPercent(parseFloat(percentCalculed.toFixed(2)))
+
     } catch (err) {
       console.error(err)
     } finally {
@@ -135,7 +143,7 @@ export function Home() {
 
   // Para verificar a porcentagem e mudar os estilos
   useEffect(() => {
-    setIsFollowingDiet(percent > 50.0)
+    setIsFollowingDiet(percent >= 50.0)
   }, [percent])
 
 
@@ -158,7 +166,7 @@ export function Home() {
             renderItem={({ item }) => (
               <ItemListComponent
                 mealId={item.mealId}
-                description={item.description}
+                description={item.name}
                 hour={item.hour}
                 status={item.status}
               />

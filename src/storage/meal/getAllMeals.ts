@@ -32,11 +32,19 @@ export interface FormatedData {
 
 export async function formatingDataToSectionList() {
 
+  let inDietMealCount = 0
+  let amountMealCount = 0
+
   const resultado: FormatedData[] = []
 
   const meals = await mealsGetAll()
 
   meals.forEach(item => {
+    amountMealCount += 1
+
+
+    if (item.inDiet === 1)
+      inDietMealCount += 1
 
     const dataExistente = resultado.find(data => data.title === item.date)
 
@@ -64,7 +72,8 @@ export async function formatingDataToSectionList() {
       }
       resultado.push(novaData)
     }
+
   })
 
-  return resultado
+  return { resultado, inDietMealCount, amountMealCount }
 }
