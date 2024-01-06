@@ -64,7 +64,14 @@ export function Meal() {
   }
 
   function handleNavigateToEditMeal() {
-    return navigation.navigate('editMeal', { mealId })
+    return navigation.navigate('editMeal', {
+      mealId,
+      name: mealRecoverData?.name ?? '',
+      description: mealRecoverData?.description ?? '',
+      date: mealRecoverData?.date ?? '',
+      hour: mealRecoverData?.hour ?? '',
+      isInDiet: mealRecoverData?.inDiet === 1 ?? false
+    })
   }
 
   async function fetchMealData() {

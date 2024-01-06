@@ -6,7 +6,12 @@ import { useRoute } from '@react-navigation/native'
 import { useState } from 'react'
 
 type RouteParams = {
-  mealID: string
+  mealId: string
+  name: string
+  description: string
+  date: string
+  hour: string
+  isInDiet: boolean
 }
 
 export function EditMeal() {
@@ -14,19 +19,15 @@ export function EditMeal() {
   const theme = useTheme()
   const route = useRoute()
 
-  const { mealID } = route.params as RouteParams
+  const {
+    mealId,
+    name,
+    description,
+    date,
+    hour,
+    isInDiet,
+  } = route.params as RouteParams
 
-
-  //capturar as informações da refeição específica
-  async function getMealData(id: string) {
-
-  }
-
-  const [name, setName] = useState()
-  const [description, setDescription] = useState()
-  const [date, setDate] = useState()
-  const [hour, setHour] = useState()
-  const [inDiet, setInDiet] = useState()
 
   return (
     <Container style={{ backgroundColor: theme.COLORS.BASE.GRAY_5 }}>
@@ -37,7 +38,8 @@ export function EditMeal() {
           description={description}
           date={date}
           hour={hour}
-          inDiet={inDiet}
+          inDiet={isInDiet ? 1 : 2}
+          mealId={mealId}
           edit
         />
       </Content>

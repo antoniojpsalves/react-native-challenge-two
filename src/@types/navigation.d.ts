@@ -20,6 +20,11 @@ export declare global {
       }
       editMeal: {
         mealId: string;
+        name: string;
+        description: string;
+        date: string;
+        hour: string;
+        isInDiet: boolean;
       }
     }
   }

@@ -19,6 +19,8 @@ import { useNavigation } from '@react-navigation/native'
 import { mealCreate } from '../../storage/meal/createMeal'
 import { AppError } from '../../utils/AppError'
 import { Alert } from 'react-native'
+import { mealsGetAll } from '../../storage/meal/getAllMeals'
+import { updateMeals } from '../../storage/meal/updateMeals'
 
 interface FormMeal {
   name?: string
@@ -27,6 +29,7 @@ interface FormMeal {
   hour?: string
   inDiet?: number
   edit?: boolean
+  mealId?: string
 }
 
 export function FormMeal({
@@ -36,6 +39,7 @@ export function FormMeal({
   hour = undefined,
   inDiet = 0,
   edit = false,
+  mealId = ''
 }: FormMeal) {
 
   const theme = useTheme()
@@ -78,6 +82,26 @@ export function FormMeal({
 
     // Salvar e nover para a tela de feedback
     return navigation.navigate('addNewMealFeedback', { followingDiet: mealInDiet === 1 })
+  }
+
+  async function editInfo(mealId: string) {
+    try {
+      const storedData = await mealsGetAll()
+      const alteredData = storedData.map((meal) => {
+        if (meal.mealId === mealId) {
+          meal.name = mealName
+          meal.description = mealDescription
+          meal.date = mealDate
+          meal.hour = mealHour
+          meal.inDiet = mealInDiet
+        }
+        return meal
+      })
+      updateMeals(alteredData)
+      navigation.navigate('home')
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   return (
@@ -140,7 +164,9 @@ export function FormMeal({
       </RowWrapper>
       <DefaultBlackButton
         title={edit ? 'Salvar alterações' : 'Cadastrar refeição'}
-        onPress={() => handleGoToNewMealFeedBack()}
+        onPress={() => {
+          edit ? editInfo(mealId) : handleGoToNewMealFeedBack()
+        }}
       />
     </Container>
   )
