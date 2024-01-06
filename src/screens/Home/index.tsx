@@ -118,21 +118,42 @@ export function Home() {
   const [percent, setPercent] = useState(0)
 
 
+  // statistic data
+
+  const [inDietMeal, setInDietMeal] = useState(0)
+  const [amountMeal, setAmountMeal] = useState(0)
+  const [outOfDietMeal, setOutOfDietMeal] = useState(0)
+  const [currentBesteSequence, SetCurrentBestSequence] = useState(0)
+
+
   async function fetchMeals() {
     try {
       setIsLoading(true)
 
-      const { resultado, inDietMealCount, amountMealCount } = await formatingDataToSectionList()
+      const {
+        resultado,
+        inDietMealCount,
+        amountMealCount,
+        outOfDietMealCount,
+        bestSequence
+      } = await formatingDataToSectionList()
       // tratar o data para que ele fique no formato esperado.
 
       setMealList(resultado)
 
-      console.log('resultado length: ' + amountMealCount)
-      console.log('inDietMealCount : ' + inDietMealCount)
+      // console.log('resultado length: ' + amountMealCount)
+      // console.log('inDietMealCount : ' + inDietMealCount)
 
       let percentCalculed = (inDietMealCount * 100) / amountMealCount
 
       setPercent(parseFloat(percentCalculed.toFixed(2)))
+
+      //setting statistc data
+      setInDietMeal(inDietMealCount)
+      setAmountMeal(amountMealCount)
+      setOutOfDietMeal(outOfDietMealCount)
+      SetCurrentBestSequence(bestSequence)
+
 
     } catch (err) {
       console.error(err)
@@ -155,7 +176,14 @@ export function Home() {
   return (
     <Container>
       <HomeHeader />
-      <StatisticCard percent={percent} statusDiet={isFollowingDiet} />
+      <StatisticCard
+        percent={percent}
+        statusDiet={isFollowingDiet}
+        inDietMealCount={inDietMeal}
+        amountMealCount={amountMeal}
+        outOfDietMealCount={outOfDietMeal}
+        bestSequence={currentBesteSequence}
+      />
       <NewMealComponent />
 
       {

@@ -5,6 +5,10 @@ export declare global {
       statistics: {
         status: boolean;
         percent: number;
+        inDietMealCount: number;
+        amountMealCount: number;
+        outOfDietMealCount: number;
+        bestSequence: number;
       }
       newMeal: undefined;
       addNewMealFeedback: {

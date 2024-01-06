@@ -34,6 +34,7 @@ export async function formatingDataToSectionList() {
 
   let inDietMealCount = 0
   let amountMealCount = 0
+  let bestSequence = 0
 
   const resultado: FormatedData[] = []
 
@@ -43,8 +44,14 @@ export async function formatingDataToSectionList() {
     amountMealCount += 1
 
 
-    if (item.inDiet === 1)
+    if (item.inDiet === 0)
+      bestSequence = 0
+
+
+    if (item.inDiet === 1) {
       inDietMealCount += 1
+      bestSequence += 1
+    }
 
     const dataExistente = resultado.find(data => data.title === item.date)
 
@@ -75,5 +82,7 @@ export async function formatingDataToSectionList() {
 
   })
 
-  return { resultado, inDietMealCount, amountMealCount }
+  const outOfDietMealCount = amountMealCount - inDietMealCount
+
+  return { resultado, inDietMealCount, amountMealCount, outOfDietMealCount, bestSequence }
 }

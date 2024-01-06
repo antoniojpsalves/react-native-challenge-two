@@ -10,15 +10,28 @@ type Props = TouchableOpacityProps & {
   percent: number
   phrase?: string
   statusDiet?: boolean
+  inDietMealCount: number
+  amountMealCount: number
+  outOfDietMealCount: number
+  bestSequence: number
 }
 
-export function StatisticCard({ percent, phrase = 'das refeições dentro da dieta', statusDiet = false, ...rest }: Props) {
+export function StatisticCard({
+  percent,
+  phrase = 'das refeições dentro da dieta',
+  statusDiet = false,
+  inDietMealCount,
+  amountMealCount,
+  outOfDietMealCount,
+  bestSequence,
+  ...rest
+}: Props) {
 
 
   const navigation = useNavigation()
 
   function handleGoToStatistics() {
-    return navigation.navigate('statistics', { status: statusDiet, percent })
+    return navigation.navigate('statistics', { status: statusDiet, percent, inDietMealCount, amountMealCount, outOfDietMealCount, bestSequence })
   }
 
   return (
