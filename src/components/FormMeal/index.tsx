@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import uuid from 'react-native-uuid'
 
 import {
   Container,
@@ -12,9 +13,12 @@ import {
   ButtonIconNo,
   ButtonIconYes
 } from './styled'
-import { DefaultBlackButton } from '../DefaultBlackButton';
-import { useTheme } from 'styled-components';
-import { useNavigation } from '@react-navigation/native';
+import { DefaultBlackButton } from '../DefaultBlackButton'
+import { useTheme } from 'styled-components'
+import { useNavigation } from '@react-navigation/native'
+import { mealCreate } from '../../storage/meal/createMeal'
+import { AppError } from '../../utils/AppError'
+import { Alert } from 'react-native'
 
 interface FormMeal {
   name?: string
@@ -50,7 +54,28 @@ export function FormMeal({
 
 
 
-  function handleGoToNewMealFeedBack() {
+  async function handleGoToNewMealFeedBack() {
+
+    const newMeal = {
+      mealId: uuid.v4().toString(),
+      name: mealName,
+      description: mealDescription,
+      date: mealDate,
+      hour: mealHour,
+      inDiet: mealInDiet
+    }
+
+    try {
+      await mealCreate(newMeal)
+    } catch (err) {
+      console.error(err)
+      if (err instanceof AppError) {
+        Alert.alert('Criar refeição', err.message)
+      } else {
+        Alert.alert('Criar refeição', 'Não foi possível criar a refeição.')
+      }
+    }
+
     // Salvar e nover para a tela de feedback
     return navigation.navigate('addNewMealFeedback', { followingDiet: mealInDiet === 1 })
   }

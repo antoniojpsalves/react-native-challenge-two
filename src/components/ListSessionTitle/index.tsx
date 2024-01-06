@@ -6,14 +6,14 @@ type ListSessionTitleProps = {
 
 export function ListSessionTitle({ selectedDate }: ListSessionTitleProps) {
 
-  const dataType = new Date(selectedDate);
-  const formatedDate = dataType.toLocaleDateString('pt-BR', {
-    timeZone: 'UTC',
-  });
+  // const dataType = new Date(selectedDate);
+  // const formatedDate = dataType.toLocaleDateString('pt-BR', {
+  //   timeZone: 'UTC',
+  // });
 
   return (
     <Container>
-      <Title>{formatedDate}</Title>
+      <Title>{selectedDate}</Title>
     </Container>
   )
 }

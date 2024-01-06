@@ -5,9 +5,11 @@ import { Container } from "./styled"
 import { SectionList } from "react-native";
 import { ItemListComponent } from "../../components/ItemListComponent";
 import { ListSessionTitle } from "../../components/ListSessionTitle";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Loading } from "../../components/Loading";
 import { ListEmpty } from "../../components/ListEmpty";
+import { useFocusEffect } from "@react-navigation/native";
+import { FormatedData, formatingDataToSectionList } from "../../storage/meal/getAllMeals";
 
 
 export function Home() {
@@ -109,18 +111,38 @@ export function Home() {
 
   const [isLoading, setIsLoading] = useState(false)
 
-  const [mealList, setMealList] = useState(fakeData)
+  const [mealList, setMealList] = useState<FormatedData[]>([])
 
   const [isFollowingDiet, setIsFollowingDiet] = useState(true)
 
   //Pegar isso aqui do localStorage
   let percent = 90.86
 
-  // Para verificar a porcentagem e mudar os estilos
 
+  async function fetchMeals() {
+    try {
+      setIsLoading(true)
+      const data = await formatingDataToSectionList()
+      // tratar o data para que ele fique no formato esperado.
+      console.log(data)
+      setMealList(data)
+    } catch (err) {
+      console.error(err)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  // Para verificar a porcentagem e mudar os estilos
   useEffect(() => {
     setIsFollowingDiet(percent > 50.0)
   }, [percent])
+
+
+  useFocusEffect(useCallback(() => {
+    // console.log('useFocusEffect carregou os dados')
+    fetchMeals()
+  }, []))
 
   return (
     <Container>
