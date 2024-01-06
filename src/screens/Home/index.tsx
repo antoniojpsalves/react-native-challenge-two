@@ -141,12 +141,12 @@ export function Home() {
 
       setMealList(resultado)
 
-      // console.log('resultado length: ' + amountMealCount)
-      // console.log('inDietMealCount : ' + inDietMealCount)
+      console.log('resultado length: ' + amountMealCount)
+      console.log('inDietMealCount : ' + inDietMealCount)
 
-      let percentCalculed = (inDietMealCount * 100) / amountMealCount
+      let percentCalculed = amountMealCount > 0 ? (inDietMealCount * 100) / amountMealCount : 0
 
-      setPercent(parseFloat(percentCalculed.toFixed(2)))
+      setPercent(parseFloat(percentCalculed.toFixed(2) ?? 0))
 
       //setting statistc data
       setInDietMeal(inDietMealCount)
