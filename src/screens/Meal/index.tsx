@@ -21,10 +21,13 @@ import {
 
 import { DefaultTitleHeader } from '../../components/DefaultTitleHeader'
 
-import { useNavigation, useRoute } from '@react-navigation/native'
+import { useFocusEffect, useNavigation, useRoute } from '@react-navigation/native'
 
 import { Alert, TouchableOpacityProps } from 'react-native'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
+import { getMealById } from '../../storage/meal/getMealByID'
+import { MealDTO } from '../../storage/meal/mealStorageDTO'
+import { removeMealByMealId } from '../../storage/meal/deleteMeal'
 
 type RouteParams = {
   mealId: string
@@ -32,8 +35,6 @@ type RouteParams = {
 }
 
 export function Meal() {
-
-  const [modalVisible, setModalVisible] = useState(false);
 
   const theme = useTheme()
 
@@ -43,9 +44,16 @@ export function Meal() {
 
   const { mealId, inDiet } = route.params as RouteParams
 
+  const [mealRecoverData, setMealRecoverData] = useState<MealDTO>()
 
   async function mealRemove() {
     console.log('tentando remover esse item ' + mealId)
+    try {
+      removeMealByMealId(mealId)
+    } catch (err) {
+      console.error(err)
+    }
+    navigation.navigate('home')
   }
 
   function handleDeleteItem() {
@@ -59,15 +67,32 @@ export function Meal() {
     return navigation.navigate('editMeal', { mealId })
   }
 
+  async function fetchMealData() {
+    try {
+      const mealData = await getMealById(mealId)
+      setMealRecoverData(mealData)
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+
+
+
+  useFocusEffect(useCallback(() => {
+    fetchMealData()
+
+  }, []))
+
   return (
     <Container style={{ backgroundColor: inDiet ? theme.COLORS.PRODUCT.GREEN_LIGHT : theme.COLORS.PRODUCT.RED_LIGHT }}>
       <DefaultTitleHeader title="Refeição" />
       <Content>
         <ContainerData>
-          <Title>Sanduíche</Title>
-          <Span>Sanduíche de pão integral com atum e salada de alface e tomate.</Span>
+          <Title>{mealRecoverData?.name}</Title>
+          <Span>{mealRecoverData?.description}</Span>
           <SubTitle>Data e Hora</SubTitle>
-          <Span>12/08/2022 às 16h00</Span>
+          <Span>{mealRecoverData?.date} às {mealRecoverData?.hour}</Span>
           <Tag>
             <Symbol style={{
               backgroundColor: inDiet ? theme.COLORS.PRODUCT.GREEN_DARK : theme.COLORS.PRODUCT.RED_DARK

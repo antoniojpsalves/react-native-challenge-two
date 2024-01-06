@@ -2,12 +2,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import { MEAL_COLLECTION } from '../storageConfig'
 
-import { mealGetAll } from './getAllMeals'
+import { mealsGetAll } from './getAllMeals'
 
 export async function removeMealByMealId(mealId: string) {
 
   try {
-    const mealStored = await mealGetAll()
+    const mealStored = await mealsGetAll()
 
     const mealsFiltereds = mealStored.filter(m => m.mealId !== mealId)
 
